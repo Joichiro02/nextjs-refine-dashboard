@@ -1,10 +1,11 @@
 'use client'
+
 import { SaveButton, useForm } from "@refinedev/antd";
 import { HttpError } from "@refinedev/core";
 import { GetFields, GetVariables } from "@refinedev/nestjs-query";
 
 import { CloseOutlined } from "@ant-design/icons";
-import { Button, Card, Drawer, Form, Input, Spin } from "antd";
+import { Button, Card, Drawer, Form, Input, Spin, theme } from "antd";
 
 import { getNameInitials } from "@/utilities";
 import { UPDATE_USER_MUTATION } from "@/graphql/mutations";
@@ -17,6 +18,8 @@ import {
   UpdateUserMutationVariables,
 } from "@/graphql/types";
 import { Dispatch, SetStateAction } from "react";
+
+const { useToken } = theme;
 
 type Props = {
   opened: boolean;
@@ -79,6 +82,7 @@ export function AccountSettings ({ opened, setOpened, userId }: Props) {
     },
   });
   const { avatarUrl, name } = queryResult?.data?.data || {};
+  const { token } = useToken();
 
   const closeModal = () => {
     setOpened(false);
@@ -92,7 +96,7 @@ export function AccountSettings ({ opened, setOpened, userId }: Props) {
         width={756}
         styles={{
           body: {
-            background: "#f5f5f5",
+            background: token.colorBgElevated,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -110,7 +114,7 @@ export function AccountSettings ({ opened, setOpened, userId }: Props) {
       open={opened}
       width={756}
       styles={{
-        body: { background: "#f5f5f5", padding: 0 },
+        body: { background: token.colorBgElevated, padding: 0 },
         header: { display: "none" },
       }}
     >
@@ -120,7 +124,7 @@ export function AccountSettings ({ opened, setOpened, userId }: Props) {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "16px",
-          backgroundColor: "#fff",
+          backgroundColor: token.colorBgElevated,
         }}
       >
         <Text strong>Account Settings</Text>

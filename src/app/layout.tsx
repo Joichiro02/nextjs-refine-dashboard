@@ -8,11 +8,11 @@ import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { AppIcon } from "@components/app-icon";
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider, liveProvider } from "@providers/data-provider";
 import "@refinedev/antd/dist/reset.css";
+import { resources } from "@config/resource";
 
 export const metadata: Metadata = {
   title: "Refine",
@@ -45,38 +45,13 @@ export default function RootLayout({
                     liveProvider={liveProvider}
                     notificationProvider={useNotificationProvider}
                     authProvider={authProvider}
-                    resources={[
-                      {
-                        name: "home",
-                        list: "/home"
-                      },
-                      {
-                        name: "blog_posts",
-                        list: "/blog-posts",
-                        create: "/blog-posts/create",
-                        edit: "/blog-posts/edit/:id",
-                        show: "/blog-posts/show/:id",
-                        meta: {
-                          canDelete: true,
-                        },
-                      },
-                      {
-                        name: "categories",
-                        list: "/categories",
-                        create: "/categories/create",
-                        edit: "/categories/edit/:id",
-                        show: "/categories/show/:id",
-                        meta: {
-                          canDelete: true,
-                        },
-                      },
-                    ]}
+                    resources={resources}
                     options={{
                       syncWithLocation: true,
                       warnWhenUnsavedChanges: true,
                       useNewQueryKeys: true,
-                      projectId: "ZggyYw-1CNaex-rYBcyN",
-                      title: { text: "Refine Project", icon: <AppIcon /> },
+                      projectId: "7jbuMR-JoXuou-XXts4n",
+                      // title: { text: "Refine Project", icon: <AppIcon /> },
                       liveMode: "auto",
                     }}
                   >
