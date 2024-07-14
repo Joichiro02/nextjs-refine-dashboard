@@ -1,16 +1,46 @@
 "use client";
 
-import dataProviderNestjsQuery, {
+import graphqlDataProvider, {
   GraphQLClient,
-  liveProvider as liveProviderNestjsQuery,
+  liveProvider as graphqlLiveProvider,
 } from "@refinedev/nestjs-query";
+
 import { createClient } from "graphql-ws";
 
-const API_URL = "https://api.nestjs-query.refine.dev/graphql";
-const WS_URL = "wss://api.nestjs-query.refine.dev/graphql";
+import { fetchWrapper } from "./fetch-wrapper";
 
-const gqlClient = new GraphQLClient(API_URL);
-const wsClient = createClient({ url: WS_URL });
+export const API_BASE_URL = "https://api.crm.refine.dev";
+export const API_URL = `${API_BASE_URL}/graphql`;
+export const WS_URL = "wss://api.crm.refine.dev/graphql";
 
-export const dataProvider = dataProviderNestjsQuery(gqlClient);
-export const liveProvider = liveProviderNestjsQuery(wsClient);
+export const client = new GraphQLClient(API_URL, {
+  fetch: (url: string, options: RequestInit) => {
+    try {
+      return fetchWrapper(url, options);
+    } catch (error) {
+      return Promise.reject(error as Error);
+    }
+  },
+});
+
+export const wsClient =
+  typeof window !== "undefined"
+    ? createClient({
+        url: WS_URL,
+        connectionParams: () => {
+          const accessToken = localStorage.getItem("access_token");
+
+          return {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          };
+        },
+      })
+    : undefined;
+
+export const dataProvider = graphqlDataProvider(client);
+
+export const liveProvider = wsClient
+  ? graphqlLiveProvider(wsClient)
+  : undefined;

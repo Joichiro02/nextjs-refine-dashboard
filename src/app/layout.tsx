@@ -1,6 +1,6 @@
 import { DevtoolsProvider } from "@providers/devtools";
 import { useNotificationProvider } from "@refinedev/antd";
-import { GitHubBanner, Refine } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import routerProvider from "@refinedev/nextjs-router";
 import { Metadata } from "next";
@@ -35,7 +35,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Suspense>
-          <GitHubBanner />
           <RefineKbarProvider>
             <AntdRegistry>
               <ColorModeContextProvider defaultMode={defaultMode}>
@@ -47,6 +46,10 @@ export default function RootLayout({
                     notificationProvider={useNotificationProvider}
                     authProvider={authProvider}
                     resources={[
+                      {
+                        name: "home",
+                        list: "/home"
+                      },
                       {
                         name: "blog_posts",
                         list: "/blog-posts",
