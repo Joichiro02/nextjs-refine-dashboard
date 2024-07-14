@@ -1,65 +1,38 @@
 "use client";
 
+import { Layout, Space, Switch, theme } from "antd";
+import CurrentUser from "./current-user";
 import { ColorModeContext } from "@contexts/color-mode";
-import type { RefineThemedLayoutV2HeaderProps } from "@refinedev/antd";
-import { useGetIdentity } from "@refinedev/core";
-import {
-  Avatar,
-  Layout as AntdLayout,
-  Space,
-  Switch,
-  theme,
-  Typography,
-} from "antd";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
-const { Text } = Typography;
 const { useToken } = theme;
 
-type IUser = {
-  id: number;
-  name: string;
-  avatar: string;
-};
-
-export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
-  sticky = true,
-}) => {
+export function Header() {
   const { token } = useToken();
-  const { data: user } = useGetIdentity<IUser>();
   const { mode, setMode } = useContext(ColorModeContext);
 
-  const headerStyles: React.CSSProperties = {
-    backgroundColor: token.colorBgElevated,
+  const headerStyle: React.CSSProperties = {
+    background: token.colorBgElevated,
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    padding: "0px 24px",
-    height: "64px",
-  };
-
-  if (sticky) {
-    headerStyles.position = "sticky";
-    headerStyles.top = 0;
-    headerStyles.zIndex = 1;
+    padding: "0 24px",
+    position: "sticky",
+    top: 0,
+    zIndex: 999
   }
-
+  
   return (
-    <AntdLayout.Header style={headerStyles}>
-      <Space>
+    <Layout.Header style={headerStyle}>
+      <Space align="center" size="middle">
         <Switch
           checkedChildren="🌛"
           unCheckedChildren="🔆"
           onChange={() => setMode(mode === "light" ? "dark" : "light")}
           defaultChecked={mode === "dark"}
         />
-        {(user?.name || user?.avatar) && (
-          <Space style={{ marginLeft: "8px" }} size="middle">
-            {user?.name && <Text strong>{user.name}</Text>}
-            {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
-          </Space>
-        )}
+        <CurrentUser/>
       </Space>
-    </AntdLayout.Header>
-  );
-};
+    </Layout.Header>
+  )
+}
