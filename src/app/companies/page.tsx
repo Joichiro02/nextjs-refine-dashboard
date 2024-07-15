@@ -16,7 +16,7 @@ type Props = {
   children?: React.ReactNode
 }
 
-export default function CompanyList({ children }: Props) {
+export default function CompanyList({ children }: any) {
   const go = useGo();
   const { tableProps, filters } = useTable<
     GetFieldsFromList<CompaniesListQuery>,
