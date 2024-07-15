@@ -9,7 +9,7 @@ import {
 import { FlagOutlined } from "@ant-design/icons";
 import { Checkbox, Form, Select, Space } from "antd";
 
-import { AccordionHeaderSkeleton } from "@/components";
+import { AccordionHeaderSkeleton } from "@/components/skeleton";
 import {
   TaskStagesSelectQuery,
   UpdateTaskMutation,

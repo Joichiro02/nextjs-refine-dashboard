@@ -1,3 +1,5 @@
+'use client';
+
 import { KanbanBoard, KanbanBoardContainer, KanbanColumn, KanbanItem, KanbanAddCardButton, ProjectCardMemo } from '@/components/tasks';
 import { KanbanColumnSkeleton, ProjectCardSkeleton } from '@/components/skeleton';
 import { UPDATE_TASK_STAGE_MUTATION } from '@/graphql/mutations';
@@ -12,7 +14,7 @@ import React from 'react';
 type Task = GetFieldsFromList<TasksQuery>
 type TaskStage = GetFieldsFromList<TaskStagesQuery> & { tasks: Task[]}
 
-export function List({ children }: React.PropsWithChildren) {
+export default function List({ children }: React.PropsWithChildren) {
   const { replace } = useNavigation();
   const { data: stages, isLoading: isLoadingStages } = useList<TaskStage>({
     resource: 'taskStages',
@@ -73,7 +75,7 @@ export function List({ children }: React.PropsWithChildren) {
 
   const handleAddCard = (args: {stageId: string}) => {
     const path = args.stageId === 'unassigned' ?
-      '/tasks/new' :  `/tasks/new?stageId=${args.stageId}`;
+      '/tasks/create' :  `/tasks/create?stageId=${args.stageId}`;
 
     replace(path);
   };

@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+'use client';
 
 import { useModalForm } from "@refinedev/antd";
 import { useNavigation } from "@refinedev/core";
@@ -7,9 +7,11 @@ import { Form, Input, Modal } from "antd";
 
 import { CREATE_TASK_MUTATION } from "@/graphql/mutations";
 
-export function CreateTask() {
-  // get search params from the url
-  const [searchParams] = useSearchParams();
+import { useSearchParams } from 'next/navigation'
+import List from "../page";
+
+export default function CreateTask() {
+  const searchParams = useSearchParams()
 
   /**
    * useNavigation is a hook by Refine that allows you to navigate to a page.
@@ -43,36 +45,38 @@ export function CreateTask() {
   });
 
   return (
-    <Modal
-      {...modalProps}
-      onCancel={() => {
-        // close the modal
-        close();
+    <List>
+      <Modal
+        {...modalProps}
+        onCancel={() => {
+          // close the modal
+          close();
 
-        // navigate to the list page of the tasks resource
-        list("tasks", "replace");
-      }}
-      title="Add new card"
-      width={512}
-    >
-      <Form
-        {...formProps}
-        layout="vertical"
-        onFinish={(values) => {
-          // on finish, call the onFinish method of useModalForm to perform the mutation
-          formProps?.onFinish?.({
-            ...values,
-            stageId: searchParams.get("stageId")
-              ? Number(searchParams.get("stageId"))
-              : null,
-            userIds: [],
-          });
+          // navigate to the list page of the tasks resource
+          list("tasks", "replace");
         }}
+        title="Add new card"
+        width={512}
       >
-        <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-      </Form>
-    </Modal>
+        <Form
+          {...formProps}
+          layout="vertical"
+          onFinish={(values) => {
+            // on finish, call the onFinish method of useModalForm to perform the mutation
+            formProps?.onFinish?.({
+              ...values,
+              stageId: searchParams?.get("stageId")
+                ? Number(searchParams?.get("stageId"))
+                : null,
+              userIds: [],
+            });
+          }}
+        >
+          <Form.Item label="Title" name="title" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </List>
   );
 }
