@@ -14,7 +14,7 @@ import React from 'react';
 type Task = GetFieldsFromList<TasksQuery>
 type TaskStage = GetFieldsFromList<TaskStagesQuery> & { tasks: Task[]}
 
-export default function List({ children }: React.PropsWithChildren) {
+export default function List({ children }: React.ReactNode) {
   const { replace } = useNavigation();
   const { data: stages, isLoading: isLoadingStages } = useList<TaskStage>({
     resource: 'taskStages',
