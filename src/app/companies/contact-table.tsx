@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+'use client';
 
 import { FilterDropdown, useTable } from "@refinedev/antd";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
@@ -21,10 +21,11 @@ import { ContactStatusTag } from "@/components/tags/contact-status-tag";
 
 type Contact = GetFieldsFromList<CompanyContactsTableQuery>;
 
-export const CompanyContactsTable = () => {
-  // get params from the url
-  const params = useParams();
+type Props = {
+  id: string;
+}
 
+export const CompanyContactsTable = ({ id }: Props) => {
   /**
    * Refine offers a TanStack Table adapter with @refinedev/react-table that allows us to use the TanStack Table library with Refine.
    * All features such as sorting, filtering, and pagination come out of the box
@@ -81,7 +82,7 @@ export const CompanyContactsTable = () => {
         {
           field: "company.id",
           operator: "eq",
-          value: params?.id as string,
+          value: id,
         },
       ],
     },

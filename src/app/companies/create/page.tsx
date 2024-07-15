@@ -1,4 +1,6 @@
-import { CompanyList } from './page';
+'use client';
+
+import CompanyList from '../page';
 import { Form, Input, Modal, Select } from 'antd';
 import { useModalForm, useSelect } from '@refinedev/antd';
 import { useGo } from '@refinedev/core';
@@ -8,7 +10,7 @@ import { UsersSelectQuery } from '@/graphql/types';
 import { GetFieldsFromList } from '@refinedev/nestjs-query';
 import SelectOptionWithAvatar from '@/components/select-option-with-avatar';
 
-export function Create() {
+export default function Create() {
   const go = useGo();
 
   const goToListPage = () => {

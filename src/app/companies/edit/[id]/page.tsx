@@ -1,3 +1,5 @@
+'use client';
+
 import CustomAvatar from '@/components/custom-avatar';
 import SelectOptionWithAvatar from '@/components/select-option-with-avatar';
 import { businessTypeOptions, companySizeOptions, industryOptions } from '@/constants';
@@ -8,9 +10,9 @@ import { getNameInitials } from '@/utilities';
 import { Edit, useForm, useSelect } from '@refinedev/antd';
 import { GetFieldsFromList } from '@refinedev/nestjs-query';
 import { Col, Form, Input, InputNumber, Row, Select } from 'antd';
-import { CompanyContactsTable } from './contact-table';
+import { CompanyContactsTable } from '../../contact-table';
 
-export function EditPage() {
+export default function EditPage({params : { id }}: SearchParamProps) {
   const { saveButtonProps, formProps, formLoading, queryResult} = useForm({
     redirect: false,
     meta: {
@@ -102,7 +104,7 @@ export function EditPage() {
           xs={24}
           xl={12}
         >
-          <CompanyContactsTable/>
+          <CompanyContactsTable id={id}/>
         </Col>
       </Row>
     </div>

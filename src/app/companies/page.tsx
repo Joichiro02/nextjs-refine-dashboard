@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import CustomAvatar from '@/components/custom-avatar';
 import { COMPANIES_LIST_QUERY } from '@/graphql/queries';
@@ -11,7 +13,7 @@ import { GetFieldsFromList } from '@refinedev/nestjs-query';
 import { CompaniesListQuery } from '@/graphql/types';
 
 
-export function CompanyList({ children }: React.PropsWithChildren) {
+export default function CompanyList({ children }: React.PropsWithChildren) {
   const go = useGo();
   const { tableProps, filters } = useTable<
     GetFieldsFromList<CompaniesListQuery>,
