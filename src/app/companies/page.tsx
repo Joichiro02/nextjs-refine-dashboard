@@ -12,8 +12,11 @@ import { currencyNumber } from '@/utilities';
 import { GetFieldsFromList } from '@refinedev/nestjs-query';
 import { CompaniesListQuery } from '@/graphql/types';
 
+type Props = {
+  children?: React.ReactNode
+}
 
-export default function CompanyList({ children }: React.ReactNode) {
+export default function CompanyList({ children }: Props) {
   const go = useGo();
   const { tableProps, filters } = useTable<
     GetFieldsFromList<CompaniesListQuery>,
