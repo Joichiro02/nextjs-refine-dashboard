@@ -13,7 +13,7 @@ import { GetFieldsFromList } from '@refinedev/nestjs-query';
 import { CompaniesListQuery } from '@/graphql/types';
 
 
-export default function CompanyList({ children }: React.PropsWithChildren) {
+export default function CompanyList({ children }: React.ReactNode) {
   const go = useGo();
   const { tableProps, filters } = useTable<
     GetFieldsFromList<CompaniesListQuery>,
